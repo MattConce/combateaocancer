@@ -1,0 +1,7 @@
+I"~(function() {
+  jQuery(function() {
+    return $('#order_card_number').validateCreditCardNumber();
+  });
+
+}).call(this);
+:ET

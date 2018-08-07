@@ -1,0 +1,39 @@
+I"Ó(function() {
+  this.CreditCard = (function() {
+    function CreditCard(number) {
+      this.number = number.replace(/[ -]/g, '');
+    }
+
+    CreditCard.prototype.validNumber = function() {
+      var i, j, n, ref, total;
+      total = 0;
+      for (i = j = ref = this.number.length - 1; ref <= 0 ? j <= 0 : j >= 0; i = ref <= 0 ? ++j : --j) {
+        n = +this.number[i];
+        if ((i + this.number.length) % 2 === 0) {
+          n = n * 2 > 9 ? n * 2 - 9 : n * 2;
+        }
+        total += n;
+      }
+      return total % 10 === 0;
+    };
+
+    return CreditCard;
+
+  })();
+
+  $.fn.validateCreditCardNumber = function() {
+    return this.each(function() {
+      return $(this).blur(function() {
+        var card;
+        card = new CreditCard(this.value);
+        if (!card.validNumber()) {
+          return $(this).next('.error').text("Invalid card number.");
+        } else {
+          return $(this).next('.error').text("");
+        }
+      });
+    });
+  };
+
+}).call(this);
+:ET

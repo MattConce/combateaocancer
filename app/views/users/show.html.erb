@@ -1,0 +1,36 @@
+<%= provide(:title, @user.name) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user-info">
+      <h1>
+        <% printf("em show.html.erb user.image: %s\n", @user.image) %>
+        <% printf("em show.html.erb user.image? %s\n", @user.image?) %>
+        <% printf("em show.html.erb user.image.file.nil? %s\n:", @user.image.file.nil?) %>
+        <% if @user.image? %>
+          <%= image_tag(@user.image.thumb.url, alt: 'Image') %>
+        <% else %>
+          <% printf("\n%s sem imagem em show.html.erb \n", @user.name) %>
+          <%= gravatar_for(user=@user, options={size: 200})%>
+        <% end %>
+        <%= @user.name %>
+      </h1>
+        <% if @user.register %>           
+          Idade: <%= @user.age %>
+          <%= render @registers %>
+        <%else%>
+          <%=link_to "Cadastro", register_path %>
+        <%end%>
+      </p>
+    </section>
+      <%= link_to 'Editar dados pessoais', edit_user_path(@user) %>
+  </aside>
+  <div class="col-md-8">
+    <% if @user.posts.any? %>
+      <h3>Depoimentos (<%= @user.posts.count %>)</h3>
+      <ol class="posts">
+        <%= render @posts %>
+      </ol>
+      <%= will_paginate @posts %>
+    <% end %>
+  </div>
+</div>
